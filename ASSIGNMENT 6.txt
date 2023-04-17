@@ -1,0 +1,59 @@
+1)SELECT MATCHID, PLAYER FROM goal 
+  WHERE TEAMID = 'GER'
+
+2)SELECT distinct id,stadium,team1,team2
+  FROM game G, goal GG
+  where g.id=GG.matchid and matchid=1012;
+
+3)SELECT player,teamid,stadium, mdate
+  FROM game JOIN goal ON (id=matchid)
+  where teamid='GER';
+
+4)SELECT team1,team2, player 
+  from goal , game 
+  where id=matchid and player LIKE '%Mario%';
+
+5)SELECT player, teamid, coach, gtime
+  FROM goal , eteam
+ WHERE gtime<=10 and teamid=id;
+
+6)SELECT mdate, teamname
+  from game join eteam on (team1=eteam.id)
+  where coach ='Fernando Santos' ;
+
+7)SELECT player 
+  from goal, game
+  where matchid=id and stadium='National Stadium, Warsaw';
+
+8)SELECT DISTINCT player
+  FROM game JOIN goal ON matchid = id 
+  WHERE ( teamid != 'GER' AND (team1='GER' OR team2='GER' ))  ;
+
+9)SELECT teamname, count(*)
+  FROM eteam JOIN goal ON id=teamid
+  GROUP BY teamname
+ 
+10)SELECT STADIUM, COUNT(*)
+   FROM GOAL, GAME
+   WHERE ID=MATCHID 
+   GROUP BY STADIUM;
+
+11)SELECT matchid,mdate, COUNT(*)
+   FROM game JOIN goal ON matchid = id 
+   WHERE (team1 = 'POL' OR team2 = 'POL')
+   GROUP BY MATCHID, MDATE;
+
+12)SELECT MATCHID, MDATE, COUNT(*)
+   FROM GOAL, GAME
+   WHERE ID=MATCHID AND TEAMID='GER'
+   GROUP BY MATCHID,MDATE;
+
+13)SELECT mdate,
+  team1,
+ SUM( CASE WHEN teamid=team1 THEN 1 ELSE 0 END )score1, 
+TEAM2,
+ SUM(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score2
+  FROM game LEFT JOIN goal ON matchid = id
+GROUP BY MDATE, TEAM1, TEAM2
+ORDER BY MDATE, TEAM1, TEAM2;
+
